@@ -156,5 +156,3 @@ class CircularDoublyLinkedListIterator:
 			item = self.iterPosition.item
 			self.iterPosition = self.iterPosition.next
 			return item
-
-# 코드 5-25
