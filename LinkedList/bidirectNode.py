@@ -3,5 +3,3 @@ class BidirectNode:
         self.item = x
         self.prev = prevNode
         self.next = nextNode
-        
-# 코드 5-24
