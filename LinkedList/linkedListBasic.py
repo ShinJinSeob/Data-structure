@@ -132,5 +132,3 @@ class LinkedListBasic:
 			print(curr.item, end = ' ')
 			curr = curr.next
 		print()
-	
-# 코드 5-15
