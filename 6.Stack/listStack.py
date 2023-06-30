@@ -25,5 +25,3 @@ class ListStack:
 		for i in range(len(self.__stack)-1, -1, -1):
 			print(self.__stack[i], end = ' ')
 		print()
-
-# 코드 6-6
