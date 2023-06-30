@@ -25,5 +25,3 @@ class ListQueue:
 		for i in range(len(self.__queue)):
 			print(self.__queue[i], end = ' ')
 		print()
-
-# 코드 7-6
