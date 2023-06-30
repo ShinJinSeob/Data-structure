@@ -23,5 +23,3 @@ class LinkedQueue:
 		for i in range(self.__queue.size()):
 			print(self.__queue.get(i), end = ' ')
 		print()
-
-# 코드 7-13
