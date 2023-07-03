@@ -110,7 +110,7 @@ class CircularLinkedList:
 					cnt += 1
 		return cnt
 
-	def extend(self, a): # a는 순회 가능한 모든 객체
+	def extend(self, a):   # a는 순회 가능한 모든 객체
 		for x in a:
 			self.append(x)
  
@@ -121,7 +121,7 @@ class CircularLinkedList:
 		return a
 
 	def reverse(self) -> None:
-		__head = self.__tail.next  # 더미 헤드
+		__head = self.__tail.next   # 더미 헤드
 		prev = __head; curr = prev.next; next = curr.next
 		curr.next = __head; __head.next = self.__tail; self.__tail = curr
 		for i in range(self.__numItems - 1):
@@ -142,17 +142,17 @@ class CircularLinkedList:
 			print(element, end = ' ')
 		print()
 
-	def __iter__(self):  # 이터레이터 생성 및 리턴
+	def __iter__(self):   # 이터레이터 생성 및 리턴 (for 구문에서 자동 호출)
 		return CircularLinkedListIterator(self)
 
 class CircularLinkedListIterator:
-	def __init__(self, alist):
-		self.__head = alist.getNode(-1)  # 더미 헤드
-		self.iterPosition = self.__head.next  # 0번 노드
-	def __next__(self):
-		if self.iterPosition == self.__head: # 순환 끝
+	def __init__(self, alist):   # (이터레이터가 생성되면서 수행)
+		self.__head = alist.getNode(-1)   # 더미 헤드
+		self.iterPosition = self.__head.next   # 0번 노드
+	def __next__(self):   # (for 구문 in a 에서 계속 수행)
+		if self.iterPosition == self.__head:   # 순환 끝
 			raise StopIteration
-		else: # 현재 원소를 리턴하면서 다음 원소로 이동
+		else:   # 현재 원소를 리턴하면서 다음 원소로 이동
 			item = self.iterPosition.item
 			self.iterPosition = self.iterPosition.next
 			return item
