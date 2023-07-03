@@ -8,6 +8,34 @@ class CircularDoublyLinkedList:
 		self.__head.prev = self.__head
 		self.__head.next = self.__head
 		self.__numItems = 0
+
+	def getNode(self, i:int) -> BidirectNode:   # i번 노드 리턴
+		curr = self.__head 
+		for index in range(i + 1):
+			curr = curr.next
+		return curr
+
+	def get(self, *args):   # i번 노드 원소 리턴
+		# 가변 파라미터 (인자가 없거나 -1이면 마지막 원소로 처리하기 위함)
+		if self.isEmpty(): 
+			return None
+		if len(args) != 0:   # pop(k)과 같이 인자가 있으면 i = k 할당
+			i = args[0]
+		if len(args) == 0 or i == -1: # pop()에 인자가 없거나 pop(-1)이면 i에 맨 끝 인덱스 할당
+			i = self.__numItems - 1
+		if (i >= 0 and i <= self.__numItems - 1):
+			return self.getNode(i).item
+		else:
+			return None
+	
+	def __findNode(self, x) -> BidirectNode:   # 원소가 x인 노드 리턴
+		curr = self.__head.next  
+		while curr != self.__head:
+			if curr.item == x:
+				return curr
+			else:
+				curr = curr.next
+		return None
  
 	def insert(self, i:int, newItem) -> None:
 		if (i >= 0 and i <= self.__numItems):
@@ -17,7 +45,7 @@ class CircularDoublyLinkedList:
 			prev.next = newNode
 			self.__numItems += 1
 		else:
-			print("index", i, ": out of bound in insert()") # 필요 시 에러 처리
+			print("index", i, ": out of bound in insert()") 
 
 	def append(self, newItem) -> None:
 		prev = self.__head.prev
@@ -27,15 +55,12 @@ class CircularDoublyLinkedList:
 		self.__numItems += 1
 
 	def pop(self, *args):
-		# 가변 파라미터. 인자가 없거나 -1이면 마지막 원소로 처리하기 위함. 파이썬 리스트 규칙 만족
 		if self.isEmpty():
 			return None
-		# 인덱스 i 결정
-		if len(args) != 0: # pop(k)과 같이 인자가 있으면 i = k 할당
+		if len(args) != 0:
 			i = args[0]
-		if len(args) == 0 or i == -1:# pop()에 인자가 없거나 pop(-1)이면 i에 맨 끝 인덱스 할당
+		if len(args) == 0 or i == -1:
 			i = self.__numItems - 1
-		# i번 원소 삭제
 		if (i >= 0 and i <= self.__numItems - 1):
 			curr = self.getNode(i)
 			retItem = curr.item
@@ -53,20 +78,6 @@ class CircularDoublyLinkedList:
 			curr.next.prev = curr.prev
 			self.__numItems -= 1
 			return x
-		else:
-			return None
-
-	def get(self, *args):
-		# 가변 파라미터. 인자가 없거나 -1이면 마지막 원소로 처리하기 위함. 파이썬 리스트 규칙 만족
-		if self.isEmpty(): return None
-		# 인덱스 i 결정
-		if len(args) != 0:   # pop(k)과 같이 인자가 있으면 i = k 할당
-			i = args[0]
-		if len(args) == 0 or i == -1: # pop()에 인자가 없거나 pop(-1)이면 i에 맨 끝 인덱스 할당
-			i = self.__numItems - 1
-		# i번 원소 리턴
-		if (i >= 0 and i <= self.__numItems - 1):
-			return self.getNode(i).item
 		else:
 			return None
  
@@ -97,7 +108,7 @@ class CircularDoublyLinkedList:
 					cnt += 1
 		return cnt
 
-	def extend(self, a): # a는 순회 가능한 모든 객체
+	def extend(self, a): 
 		for element in a:
 			self.append(element)
 
@@ -122,22 +133,6 @@ class CircularDoublyLinkedList:
 		self.clear()
 		for element in a:
 			self.append(element)
-
-	def __findNode(self, x) -> BidirectNode:
-		curr = self.__head.next  # 0번 노드
-		while curr != self.__head:
- 
-			if curr.item == x:
-				return curr
-			else:
-				curr = curr.next
-		return None
-
-	def getNode(self, i:int) -> BidirectNode:
-		curr = self.__head  # 더미 헤드, index: -1
-		for index in range(i + 1):
-			curr = curr.next
-		return curr
 
 	def printList(self) -> None:
 		for element in self:
