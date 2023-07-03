@@ -1,14 +1,14 @@
 class ListQueue:
 	def __init__(self):
-		self.__queue = []
+		self.__queue = []   # 리스트 활용
 
 	def enqueue(self, x):
 		self.__queue.append(x)
 
 	def dequeue(self):
-		return self.__queue.pop(0) # .pop(0): 리스트의 첫 원소를 삭제한 후 원소 리턴
+		return self.__queue.pop(0) 
 
-	def front(self):
+	def front(self):   # 프론트 원소 리턴
 		if self.isEmpty():
 			return None
 		else:
