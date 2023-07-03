@@ -1,5 +1,5 @@
 def selectionSort(A):
-	for last in range(len(A)-1, 0, -1): 끝 인덱스부터 역순으로 정렬
+	for last in range(len(A)-1, 0, -1):   # 끝 인덱스부터 역순으로 정렬
 		k = theLargest(A, last)	
 		A[k], A[last] =  A[last], A[k]
 
