@@ -1,12 +1,43 @@
 from DS.list.listNode import ListNode
 
-class CircularLinkedList:
+class CircularLinkedList:   #원형 연결리스트
+	                    #마지막 노드에 대한 접근성 상승
+	                    #이터레이터 생성
 	def __init__(self):
-		self.__tail = ListNode("dummy", None)
+		self.__tail = ListNode("dummy", None)   # 마지막 노드 레퍼런스
 		self.__tail.next = self.__tail
-		self.__numItems = 0
+		self.__numItems = 0   # 더미 노드 제외 노드 
+		
+	def getNode(self, i:int) -> ListNode:   # i번 노드 리턴
+		curr = self.__tail.next 
+		for index in range(i+1):
+			curr = curr.next
+		return curr
+	
+	def get(self, *args):   # i번 노드 원소 리턴
+	# 가변 파라미터 (인자가 없거나 -1이면 마지막 원소로 처리하기 위함)
+		if self.isEmpty():
+			return None
+		if len(args) != 0:   # pop(k)과 같이 인자가 있으면 i = k 할당
+			i = args[0]
+		if len(args) == 0 or i == -1:   # pop()에 인자가 없거나 pop(-1)이면 i에 맨 끝 인덱스 할당
+			i = self.__numItems - 1
+		if (i >= 0 and i <= self.__numItems - 1):
+			return self.getNode(i).item
+		else:
+			return None
 
-	def insert(self, i:int, newItem) -> None:
+	def __findNode(self, x) -> (ListNode, ListNode):   # (원소가 x인 노드의 직전 노드, 원소가 x인 노드) 리턴
+		__head = prev = self.__tail.next 
+		curr = prev.next  # 0번 노드
+		while curr != __head:
+			if curr.item == x:
+				return (prev, curr)
+			else:
+				prev = curr; curr = curr.next
+		return (None, None)
+
+	def insert(self, i:int, newItem) -> None:   # 삽입
 		if (i >= 0 and i <= self.__numItems):
 			prev = self.getNode(i - 1)
 			newNode = ListNode(newItem, prev.next)
@@ -15,24 +46,21 @@ class CircularLinkedList:
 				self.__tail = newNode
 			self.__numItems += 1
 		else:
-			print("index", i, ": out of bound in insert()") # 필요 시 에러 처리
+			print("index", i, ": out of bound in insert()")
 
-	def append(self, newItem) -> None:
+	def append(self, newItem) -> None:   #연장
 		newNode = ListNode(newItem, self.__tail.next)
 		self.__tail.next = newNode
 		self.__tail = newNode
 		self.__numItems += 1
 
-	def pop(self, *args):
-		# 가변 파라미터. 인자가 없거나 -1이면 마지막 원소로 처리하기 위함. 파이썬 리스트 규칙 만족
+	def pop(self, *args):   # 지정 인덱스 노드 삭제
 		if self.isEmpty():
 			return None
-		# 인덱스 i 결정
-		if len(args) != 0: # pop(k)과 같이 인자가 있으면 i = k 할당
+		if len(args) != 0: 
 			i = args[0]
-		if len(args) == 0 or i == -1:# pop()에 인자가 없거나 pop(-1)이면 i에 맨 끝 인덱스 할당
+		if len(args) == 0 or i == -1: 
 			i = self.__numItems - 1
-		# i번 원소 삭제
 		if (i >= 0 and i <= self.__numItems - 1):
 			prev = self.getNode(i - 1)
 			retItem = prev.next.item
@@ -44,7 +72,7 @@ class CircularLinkedList:
 		else:
 			return None
 
-	def remove(self, x):
+	def remove(self, x):   # 원소가 x인 노드 삭제
 		(prev, curr) = self.__findNode(x)
 		if curr != None:
 			prev.next = curr.next
@@ -52,21 +80,6 @@ class CircularLinkedList:
 				self.__tail = prev	  
 			self.__numItems -= 1
 			return x
-		else:
-			return None
-
-	def get(self, *args):
-	# 가변 파라미터. 인자가 없거나 -1이면 마지막 원소로 처리하기 위함. 파이썬 리스트 규칙 만족
-		if self.isEmpty():
-			return None
-		# 인덱스 i 결정
-		if len(args) != 0: # pop(k)과 같이 인자가 있으면 i = k 할당
-			i = args[0]
-		if len(args) == 0 or i == -1:# pop()에 인자가 없거나 pop(-1)이면 i에 맨 끝 인덱스 할당
-			i = self.__numItems - 1
-		# i번 원소 리턴
-		if (i >= 0 and i <= self.__numItems - 1):
-			return self.getNode(i).item
 		else:
 			return None
 
@@ -123,28 +136,12 @@ class CircularLinkedList:
 		for element in a:
 			self.append(element)
 
-	def __findNode(self, x) -> (ListNode, ListNode):
-		__head = prev = self.__tail.next  # 더미 헤드
-		curr = prev.next  # 0번 노드
-		while curr != __head:
-			if curr.item == x:
-				return (prev, curr)
-			else:
-				prev = curr; curr = curr.next
-		return (None, None)
- 
-	def getNode(self, i:int) -> ListNode:
-		curr = self.__tail.next  # 더미 헤드, index: -1
-		for index in range(i+1):
-			curr = curr.next
-		return curr
-
 	def printList(self) -> None:
 		for element in self:
 			print(element, end = ' ')
 		print()
 
-	def __iter__(self):  # generating iterator and return
+	def __iter__(self):  # 이터레이터 생성 및 리턴
 		return CircularLinkedListIterator(self)
 
 class CircularLinkedListIterator:
