@@ -2,15 +2,15 @@ from DS.list.linkedListBasic import LinkedListBasic
 
 class LinkedStack:
 	def __init__(self):
-		self.__list = LinkedListBasic()
+		self.__list = LinkedListBasic()   # 연결리스트 활용
 
 	def push(self, newItem):
-		self.__list.insert(0, newItem)
+		self.__list.insert(0, newItem)   # 0번 노드로 삽입
 
 	def pop(self):
-		return self.__list.pop(0)
+		return self.__list.pop(0)   # 0번 노드 삭제
 
-	def top(self):
+	def top(self):   # 탑 원소 리턴
 		if self.isEmpty():
 			return None
 		else:
