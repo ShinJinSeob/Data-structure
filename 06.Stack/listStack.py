@@ -1,6 +1,6 @@
 class ListStack:
 	def __init__(self):
-		self.__stack = []
+		self.__stack = []   # 리시트 활용
 
 	def push(self, x):
 		self.__stack.append(x)
@@ -8,7 +8,7 @@ class ListStack:
 	def pop(self):
 		return self.__stack.pop()
 
-	def top(self):
+	def top(self):   # 탑 원소 리턴
 		if self.isEmpty():
 			return None
 		else:
