@@ -1,8 +1,9 @@
 from DS.list.listNode import ListNode
 
-class CircularLinkedList:   #원형 연결리스트
-	                    #마지막 노드에 대한 접근성 상승
-	                    #이터레이터 생성
+class CircularLinkedList:  
+	#원형 연결리스트
+	#마지막 노드에 대한 접근성 상승
+	#이터레이터 생성
 	def __init__(self):
 		self.__tail = ListNode("dummy", None)   # 마지막 노드 레퍼런스
 		self.__tail.next = self.__tail
