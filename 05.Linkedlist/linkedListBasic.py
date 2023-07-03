@@ -6,7 +6,7 @@ class LinkedListBasic:
 		self.__numItems = 0   # 더미 노드 제외 노드 수
 
 	def __getNode(self, i:int) -> ListNode:   # i번 노드 리턴
-		curr = self.__head   # 더미 노드, index: -1
+		curr = self.__head 
 		for index in range(i+1):
 			curr = curr.next
 		return curr   
@@ -83,26 +83,26 @@ class LinkedListBasic:
 		self.__head = ListNode("dummy", None)
 		self.__numItems = 0
 
-	def count(self, x) -> int:
+	def count(self, x) -> int:   # 원소가 x인 노드 수
 		cnt = 0
-		curr = self.__head.next  # 0번 노드
+		curr = self.__head.next
 		while curr != None:
 			if curr.item == x:
 					cnt += 1
 			curr = curr.next
 		return cnt
 
-	def extend(self, a): # 연결리스트 a 
+	def extend(self, a):   # 연결리스트 a를 연장
 		for index in range(a.size()):
 			self.append(a.get(index))
  
-	def copy(self):
+	def copy(self):   #연결리스트 복사
 		a = LinkedListBasic()
 		for index in range(self.__numItems):
 			a.append(self.get(index))
 		return a
 
-	def reverse(self):
+	def reverse(self):   #연결리스트 거꾸로
 		a = LinkedListBasic()
 		for index in range(self.__numItems):
 			a.insert(0, self.get(index))
@@ -110,7 +110,7 @@ class LinkedListBasic:
 		for index in range(a.size()):
 			self.append(a.get(index))
 
-	def sort(self) -> None:
+	def sort(self) -> None:   #연결리스트 정렬
 		a = []
 		for index in range(self.__numItems):
 			a.append(self.get(index))
@@ -119,8 +119,8 @@ class LinkedListBasic:
 		for index in range(len(a)):
 			self.append(a[index])
 
-	def printList(self):
-		curr = self.__head.next # 0번 노드: 더미 헤드 다음 노드
+	def printList(self):   #연결리스트 출력
+		curr = self.__head.next
 		while curr != None:
 			print(curr.item, end = ' ')
 			curr = curr.next
