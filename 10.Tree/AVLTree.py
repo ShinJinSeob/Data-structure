@@ -3,22 +3,25 @@ class AVLNode:
 		self.item = newItem
 		self.left = left
 		self.right = right
-		self.height = h
+		self.height = h   # 트리 높이
  
 class AVLTree:
 	def __init__(self):
 		self.NIL = AVLNode(None, None, None, 0)
-		self.__root = self.NIL
+		self.__root = self.NIL   # 루트 레퍼런스
 		self.LL = 1; self.LR = 2; self.RR = 3; self.RL = 4
-		self.NO_NEED = 0;
-		self.ILLEGAL = -1
+		# LL유형: t.left.left가 가장 깊음
+		# LR유형: t.left.right가 가장 깊음
+		# RR유형: t.right.right가 가장 깊음
+		# RL유형: t.right.left가 가장 깊음
+		self.NO_NEED = 0;   # 균형 잡기 필요 없음
+		self.ILLEGAL = -1   # 유형 파악 안 됨
 
-	# [알고리즘 10-1] 구현: 검색
-	def search(x):
+	def search(x):   # 검색
 		return self.__SearchItem(self.root,x)
 
 	def __searchItem(self, tNode:AVLNode, x) -> AVLNode:
-		if tNode == self.NIL:
+		if tNode == self.NIL: 
 			return self.NIL
 		elif x == tNode.item:
 			return tNode
@@ -27,29 +30,29 @@ class AVLTree:
 		else:
 			return self.__searchItem(tNode.right, x)
 
-	# [알고리즘 10-3] 구현: 삽입
-	def insert(self, x):
+	def insert(self, x):   # 삽입
 		self.__root = self.__insertItem(self.__root, x)
 
 	def __insertItem(self, tNode:AVLNode, x) -> AVLNode:
-		if tNode == self.NIL: # insert after a leaf(or into an empty tree)
+		if tNode == self.NIL:   # 검색 실패
 			tNode = AVLNode(x, self.NIL, self.NIL, 1)
-		elif x < tNode.item:  # branch left
+		elif x < tNode.item:
 			tNode.left = self.__insertItem(tNode.left, x)
+			# 후처리
 			tNode.height = 1 + max(tNode.right.height, tNode.left.height)
 			type = self.__needBalance(tNode)
 			if (type != self.NO_NEED):
 				tNode = self.__balanceAVL(tNode, type)
-		else:  # branch right
+		else: 
 			tNode.right = self.__insertItem(tNode.right, x)
+			# 후처리
 			tNode.height = 1 + max(tNode.right.height, tNode.left.height)
 			type = self.__needBalance(tNode)
 			if type != self.NO_NEED:
 				tNode = self.__balanceAVL(tNode, type)
 		return tNode
 
-	# [알고리즘 10-7] 구현: 삭제
-	def delete(self, x):
+	def delete(self, x):   # 삭제
 		self.__root = self.__deleteItem(self.__root, x)
 
 	def __deleteItem(self, tNode:AVLNode, x) -> AVLNode:
@@ -123,7 +126,7 @@ class AVLTree:
 			print("Impossible type! Should be one of LL, LR, RR, RL")
 		return returnNode
 
-	# [알고리즘 11-1] 구현 : 좌회전
+	# 좌회전
 	def __leftRotate(self, t:AVLNode) -> AVLNode:
 		RChild = t.right
 		if RChild == self.NIL:
@@ -135,7 +138,7 @@ class AVLTree:
 		RChild.height = 1 + max(RChild.left.height, RChild.right.height)
 		return RChild
 
-	# [알고리즘 11-1] 구현 : 우회전
+	# 우회전
 	def __rightRotate(self, t:AVLNode) -> AVLNode:
 		LChild = t.left
 		if LChild == self.NIL:
@@ -147,23 +150,23 @@ class AVLTree:
 		LChild.height = 1 + max(LChild.left.height, LChild.right.height)
 		return LChild
 
+	# 유형 파악
 	def __needBalance(self, t:AVLNode) -> int:
 		type = self.ILLEGAL
-		if (t.left.height + 2 <= t.right.height): # R 유형
+		if (t.left.height + 2 <= t.right.height):   # R 유형
 			if (t.right.left.height) <= t.right.right.height:
 				type = self.RR
 			else:
-				type = self.RL;
-		elif (t.left.height) >= t.right.height + 2:  # L 유형
+				type = self.RL
+		elif t.left.height >= t.right.height + 2:   # L 유형
 			if (t.left.left.height) >= t.left.right.height:
 				type = self.LL
 			else:
 				type = self.LR
-		else:
+		else:   # 균형 잡기 필요 없음
 			type = self.NO_NEED
 		return type
 
-	# 기타
 	def isEmpty(self) -> bool:
 		return self.__root == self.NIL
 
