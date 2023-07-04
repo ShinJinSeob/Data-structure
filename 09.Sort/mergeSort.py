@@ -18,7 +18,7 @@ def merge(A, p:int, q:int, r:int):
 	while j <= r:   # 나머지 처리
 		tmp[t] = A[j]; t += 1; j += 1
 	i = p; t = 0
-	while i <= r:   # 정렬
+	while i <= r:   # A로 옮김
 		A[i] = tmp[t]; t += 1; i += 1
 
 # nlogn의 점근적 수행 시간을 가짐 (고급 정렬)
