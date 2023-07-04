@@ -56,19 +56,21 @@ class AVLTree:
 		self.__root = self.__deleteItem(self.__root, x)
 
 	def __deleteItem(self, tNode:AVLNode, x) -> AVLNode:
-		if tNode == self.NIL:
-			return self.NIL	# item not found!
+		if tNode == self.NIL:   # 검색 실패
+			return self.NIL
 		else:
-			if x == tNode.item: # item found at tNode
+			if x == tNode.item:   # 검색 성공
 				tNode = self.__deleteNode(tNode)
 			elif x < tNode.item:
 				tNode.left = self.__deleteItem(tNode.left, x)
+				# 후처리
 				tNode.height = 1 + max(tNode.right.height, tNode.left.height)
 				type = self.__needBalance(tNode)
 				if type != self.NO_NEED:
 					tNode = self.__balanceAVL(tNode, type)
 			else:
 				tNode.right = self.__deleteItem(tNode.right, x)
+				# 후처리
 				tNode.height = 1 + max(tNode.right.height, tNode.left.height)
 				type = self.__needBalance(tNode)
 				if type != self.NO_NEED:
@@ -77,32 +79,33 @@ class AVLTree:
 
 	def __deleteNode(self, tNode:AVLNode) -> AVLNode:
 		# 3가지 case
-		#     1. tNode이 리프 노드
-		#     2. tNode이 자식이 하나만 있음
-		#     3. tNode이 자식이 둘 있음
-		if tNode.left == self.NIL and tNode.right == self.NIL: # case 1(자식이 없음)
+		#     1. tNode가 리프 노드
+		#     2. tNode가 자식이 하나
+		#     3. tNode가 자식이 둘
+		if tNode.left == self.NIL and tNode.right == self.NIL:   # case 1
 			return self.NIL
-		elif tNode.left == self.NIL:  # case 2(오른자식뿐)
+		elif tNode.left == self.NIL:   # case 2 (오른자식뿐)
 			return tNode.right
-		elif tNode.right == self.NIL: # case 2(왼자식뿐)
+		elif tNode.right == self.NIL:   # case 2 (왼자식뿐)
 			return tNode.left
-		else: # case 3(두 자식이 다 있음)
-			(rtnItem, rtnNode) = self.__deleteMinItem(tNode.right)
+		else:   # case 3
+			(rtnItem, rtnNode) = self.__deleteMinItem(tNode.right)   # (오른쪽 서브트리의 최솟값, tnode의 오른자식)
 			tNode.item = rtnItem
 			tNode.right = rtnNode
+			# 후처리
 			tNode.height = 1 + max(tNode.right.height, tNode.left.height)
 			type = self.__needBalance(tNode)
 			if type != self.NO_NEED:
 				tNode = self.__balanceAVL(tNode, type)
-			return tNode  # tNode survived
+			return tNode
 
 	def __deleteMinItem(self, tNode:AVLNode) -> tuple:
-		if tNode.left == self.NIL:
-			# found min at tNode
+		if tNode.left == self.NIL:   # 최소 노드 검색 성공
 			return (tNode.item, tNode.right)
 		else: # keep branching left, then backtrack
-			(rtnItem, rtnNode) = self.__deleteMinItem(tNode.left)
+			(rtnItem, rtnNode) = self.__deleteMinItem(tNode.left)   # (오른쪽 서브트리의 최솟값, tnode의 왼자식)
 			tNode.left = rtnNode
+			# 후처리
 			tNode.height = 1 + max(tNode.right.height, tNode.left.height)
 			type = self.__needBalance(tNode)
 			if type != self.NO_NEED:
