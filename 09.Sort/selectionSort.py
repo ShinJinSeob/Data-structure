@@ -10,5 +10,5 @@ def theLargest(A, last:int) -> int:   # 가장 큰 수의 인덱스 리턴
 			largest = i
 	return largest
 
-# n^2의 점근적 수행 시간을 가짐 (기본 정렬)
+# θ(n^2)의 점근적 수행 시간을 가짐 (기본 정렬)
 # 기본 정렬은 삽입, 선택, 버블 순으로 빠름
