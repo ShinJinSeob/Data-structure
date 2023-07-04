@@ -37,5 +37,3 @@ class HashOpenAddressed:
 				self.__table[slot] = self.__DELETED;
 				self.__numItems -= 1
 				break
-
-# 코드 12-3
