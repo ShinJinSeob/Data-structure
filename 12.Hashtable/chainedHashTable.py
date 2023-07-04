@@ -41,5 +41,3 @@ class ChainedHashTable:
 		for i in range(len(self.__table)):
 			self.__table[i] = CircularLinkedList()
 		self.__numItems = 0
-
-# 코드 12-1
