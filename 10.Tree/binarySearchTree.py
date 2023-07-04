@@ -65,10 +65,10 @@ class BinarySearchTree:
 			return tNode
 
 	def __deleteMinItem(self, tNode:TreeNode) -> tuple:
-		if tNode.left == None:   # 최소 노드 검색
+		if tNode.left == None:   # 최소 노드 검색 성공
 			return (tNode.item, tNode.right)
 		else:
-			(rtnItem, rtnNode) = self.__deleteMinItem(tNode.left)
+			(rtnItem, rtnNode) = self.__deleteMinItem(tNode.left)   # (오른쪽 서브트리의 최솟값, tnode의 왼자식)
 			tNode.left = rtnNode   # 레퍼런스 재지정 (rttNode와 부모 노드 연결하기 위함)
 			return (rtnItem, tNode)
 
