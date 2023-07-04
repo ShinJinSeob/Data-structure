@@ -132,8 +132,8 @@ class AVLTree:
 		if RChild == self.NIL:
 			print(t.item, "'s RChild shouldn't be NIL!")
 		RLChild = RChild.left
-		RChild.left = t
-		t.right = RLChild
+		RChild.left = t   # RChild가 루트 노드
+		t.right = RLChild   # t의 새로운 오른자식 RLChild
 		t.height = 1 + max(t.left.height, t.right.height)
 		RChild.height = 1 + max(RChild.left.height, RChild.right.height)
 		return RChild
@@ -144,8 +144,8 @@ class AVLTree:
 		if LChild == self.NIL:
 			print(t.item, "'s LChild shouldn't be NIL!")
 		LRChild = LChild.right
-		LChild.right = t
-		t.left = LRChild
+		LChild.right = t   # LChild가 루트 노드
+		t.left = LRChild   # t의 새로운 왼자식 LRChild
 		t.height = 1 + max(t.left.height, t.right.height)
 		LChild.height = 1 + max(LChild.left.height, LChild.right.height)
 		return LChild
